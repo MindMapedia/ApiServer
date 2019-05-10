@@ -1,6 +1,6 @@
 module.exports = {
 	'env': {
-		'browser': true,
+		'node': true,
 		'commonjs': true,
 		'es6': true,
 		'mocha': true
@@ -14,6 +14,16 @@ module.exports = {
 		'ecmaVersion': 2018
 	},
 	'rules': {
+		'keyword-spacing': [
+			'error', 
+			{'before': true, 
+			'after': true}
+		],
+		'space-before-function-paren': ['error', 'always'],
+		'space-in-parens': ['error', 'never'],
+		'no-console': 0,
+		'no-process-env': 0,
+		'no-var': 2,
 		'indent': [
 			'error',
 			'tab'

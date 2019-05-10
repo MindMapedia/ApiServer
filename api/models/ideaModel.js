@@ -1,10 +1,10 @@
 'use strict'
 
 
-var mongoose = require('mongoose')
-var Schema = mongoose.Schema
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-var IdeaSchema = new Schema({
+const IdeaSchema = new Schema({
 	title: {
 		type: String,
 		Required: 'IdeaTitle'

@@ -1,25 +1,37 @@
-var chai = require('chai')
-var chaiHttp = require('chai-http')
-var Idea = require('../api/models/IdeaModel')
-require('../')
-var should = chai.should()
-// @toto change var to let or const
+const chai = require('chai')
+const chaiHttp = require('chai-http')
+const should = chai.should()
 
-const apiHost = 'http://localhost:3000'
+const Idea = require ('../api/models/ideaModel')
+
+const server = require('../api/server')
+const db = require('../api/db')
+
+const	port = process.env.PORT || 3000
+const mongooseUri = 'mongodb://'+(process.env.MONGO_HOST ? process.env.MONGO_HOST :'localhost')+':27017/IdeaDb'
+
+db.connect(mongooseUri, {useNewUrlParser: true})
+const serverOn = server.listen(port)
+
+const apiHost = 'http://localhost:'+port
 let id = {}
 chai.use(chaiHttp)
 
 
 describe('Ideas', () => {
-	beforeEach ( (done) => {
-		Idea.collection.drop
+	beforeEach ((done) => {
+		Idea.collection.drop()
 		let sampleIdea = new Idea ({title: 'lorem'})
 		sampleIdea.save((err,res) => {   
 			id.last = res.id
 			done()
-		} )
-	}
-	)
+		})
+	})
+	after ((done) => {
+		serverOn.close()
+		db.connection.close()
+		done()
+	})
 
 	it('should list ALL ideas on /ideas GET', (done)=>{
 		chai
